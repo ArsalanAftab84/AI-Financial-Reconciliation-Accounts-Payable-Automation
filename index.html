@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Triage Agent — n8n Workflow</title>
+  <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.0/webcomponents-loader.js"></script>
+  <script src="https://www.unpkg.com/lit@2.0.0-rc.2/polyfill-support.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@n8n_io/n8n-demo-component/n8n-demo.bundled.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f1117;
+      color: #e6edf3;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.25rem;
+    }
+    header {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    h1 { font-size: 1.4rem; font-weight: 600; }
+    p.subtitle { color: #8b949e; font-size: 0.95rem; margin-top: 0.25rem; }
+    .actions { display: flex; gap: 0.75rem; }
+    .btn {
+      padding: 0.55rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: 1px solid #30363d;
+      color: #e6edf3;
+      background: #21262d;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: #30363d; }
+    .btn-primary { background: #ea4b71; border-color: #ea4b71; color: #fff; }
+    .btn-primary:hover { background: #d63c61; }
+    .canvas-wrap {
+      width: 100%;
+      max-width: 1100px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      overflow: hidden;
+      min-height: 560px;
+    }
+    n8n-demo {
+      width: 100%;
+      --n8n-frame-background-color: #161b22;
+      --n8n-workflow-min-height: 560px;
+    }
+    #status {
+      padding: 2rem;
+      text-align: center;
+      color: #8b949e;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Autonomous GitHub Triage Agent</h1>
+      <p class="subtitle">n8n AI Agent workflow for repository inspection, code review, and HITL issue creation</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" href="./workflow.json" download>Download workflow.json</a>
+      <a class="btn" href="https://github.com/YOUR_USERNAME/YOUR_REPO">View Repository</a>
+    </div>
+  </header>
+
+  <main class="canvas-wrap">
+    <div id="status">Loading interactive workflow canvas...</div>
+    <n8n-demo id="workflow-viewer" frame="true" clicktointeract="true" style="display:none;"></n8n-demo>
+  </main>
+
+  <script>
+    fetch('./workflow.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Could not load workflow.json');
+        return res.json();
+      })
+      .then((data) => {
+        const viewer = document.getElementById('workflow-viewer');
+        viewer.setAttribute('workflow', JSON.stringify(data));
+        viewer.style.display = 'block';
+        document.getElementById('status').style.display = 'none';
+      })
+      .catch((err) => {
+        document.getElementById('status').textContent =
+          'Error loading workflow.json. Make sure workflow.json is in the same folder as index.html.';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
