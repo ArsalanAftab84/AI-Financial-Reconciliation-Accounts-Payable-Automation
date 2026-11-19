@@ -2,7 +2,7 @@
 
 An AI-powered GitHub triage and code-review agent built in **n8n**. It inspects live repository files, identifies bugs and security risks from actual source code, and drafts GitHub issues behind a Human-in-the-Loop (HITL) approval step.
 
-**[Interactive Workflow Preview](https://YOUR_USERNAME.github.io/YOUR_REPO/)** | **[Download `workflow.json`](./workflow.json)**
+**[Interactive Workflow Preview](https://ArsalanAftab84.github.io/AI-Financial-Reconciliation-Accounts-Payable-Automation/)** | **[Download `workflow.json`](./workflow.json)**
 
 ## What It Does
 - **Repository Exploration:** Dynamically lists repository contents and reads target source files on demand rather than guessing code contents.
